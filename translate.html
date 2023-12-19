@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="submit"] {
+            display: block;
+            margin-top: 20px;
+            width: 100%;
+            padding : 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Password Translator</h1>
+        <form action="">
+            <label for="operation">Do you want to create a code or translate a code?</label>
+            <select id="operation">
+                <option value="create">Create</option>
+                <option value="translate">Translate</option>
+            </select>
+
+            <label for="input">Please enter a sentence or word:</label>
+            <input type="text" id="input">
+
+            <input type="submit" value="Submit">
+        </form>
+
+        <div class="result">
+            <h3>Result:</h3>
+            <p id="output"></p>
+        </div>
+    </div>
+
+    <script>
+        function translateWord(word) {
+            let translatedWord = "";
+            for (let i = 0; i < word.length; i++) {
+                let char = word[i];
+                if (char === " ") {
+                    translatedWord += " ";
+                } else {
+                    translatedWord += String.fromCharCode(char.charCodeAt(0) + 6);
+                }
+            }
+            return translatedWord;
+        }
+
+        function reverseTranslateWord(word) {
+            let translatedWord = "";
+            for (let i = 0; i < word.length; i++) {
+                let char = word[i];
+                if (char === " ") {
+                    translatedWord += " ";
+                } else {
+                    translatedWord += String.fromCharCode(char.charCodeAt(0) - 6);
+                }
+            }
+            return translatedWord;
+        }
+
+        document.querySelector("form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const operation = document.getElementById("operation").value;
+            const input = document.getElementById("input").value;
+            const output = document.getElementById("output");
+
+            if (operation === "create") {
+                const translatedResult = translateWord(input);
+                output.textContent = "Encrypted: " + translatedResult;
+            } else if (operation === "translate") {
+                const reversedResult = reverseTranslateWord(input);
+                output.textContent = "Decrypted: " + reversedResult;
+            }
+        });
+    </script>
+</body>
+</html>
